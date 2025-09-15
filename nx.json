@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "gitcraft",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "plugins": [],
+  "projects": {
+    "web": {
+      "root": "apps/web"
+    },
+    "api": {
+      "root": "apps/api"
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

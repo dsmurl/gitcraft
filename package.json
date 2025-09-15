@@ -1,0 +1,40 @@
+{
+  "name": "gitcraft",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@9.14.2",
+  "scripts": {
+    "dev": "nx run-many -t dev --parallel",
+    "build": "nx run-many -t build --parallel",
+    "lint": "nx run web:lint",
+    "preview": "nx run web:preview",
+    "web:dev": "nx run web:dev",
+    "web:build": "nx run web:build",
+    "web:lint": "nx run web:lint",
+    "web:preview": "nx run web:preview",
+    "api:dev": "nx run api:dev",
+    "api:build": "nx run api:build",
+    "api:start": "nx run api:start",
+    "prettier": "prettier --write ."
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "vite": "^7.1.2",
+    "nx": "^20.1.0"
+  }
+}

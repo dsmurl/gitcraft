@@ -1,0 +1,3 @@
+packages:
+  - 'apps/*'
+  # add more globs later if needed, e.g. "packages/*", "libs/*"

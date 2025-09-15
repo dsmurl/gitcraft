@@ -1,0 +1,36 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "web",
+  "projectType": "application",
+  "sourceRoot": "apps/web/src",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "vite"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "vite build"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": ".",
+        "command": "eslint apps/web"
+      }
+    },
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/web",
+        "command": "vite preview"
+      }
+    }
+  }
+}
