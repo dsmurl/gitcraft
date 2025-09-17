@@ -18,7 +18,12 @@
     "api:dev": "nx run api:dev",
     "api:build": "nx run api:build",
     "api:start": "nx run api:start",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "nx:reset": "nx reset",
+    "clean:dist": "rm -rf apps/*/dist apps/*/.vite .nx node_modules/.cache",
+    "clean:modules": "rm -rf node_modules apps/*/node_modules",
+    "clean": "pnpm run nx:reset && pnpm run clean:dist",
+    "clean:all": "pnpm run clean && pnpm run clean:modules && pnpm store prune"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.47.0",
