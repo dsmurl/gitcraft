@@ -1,13 +1,11 @@
 # Full Stack FastAPI and PostgreSQL - Boilerplate
 
-
-
 Work Roadmap:
 
-- [X] Web base
+- [x] Web base
   - to build a simple web base for a commercial website
     - simple login to web with clerk
-- [X] Api base
+- [x] Api base
   - to build an api
     - has simple test routes that are unprotected
 - [ ] Api base clerk
@@ -27,8 +25,8 @@ Work Roadmap:
 - [ ] Intro credit store
   - to build out a simple store for people to spend their credits at
 
-
 ### Prod builds
+
 - `pnpm run build:web`
   - `pnpm dlx serve -s apps/web/dist -l 4173`
 - `pnpm run build:api`
