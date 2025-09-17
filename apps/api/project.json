@@ -8,21 +8,21 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/api",
-        "command": "npm run dev"
+        "command": "pnpm run dev"
       }
     },
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/api",
-        "command": "npm run build"
+        "command": "pnpm run build"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/api",
-        "command": "npm run start"
+        "command": "pnpm run start"
       }
     }
   }

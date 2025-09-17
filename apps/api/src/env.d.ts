@@ -5,5 +5,7 @@ declare namespace NodeJS {
     GITHUB_CLIENT_SECRET: string;
     SESSION_SECRET?: string;
     API_PORT?: string;
+    COUNTER_INITIAL?: string; // starting count value
+    COUNTER_STEP?: string; // increment step per call
   }
 }

@@ -19,9 +19,11 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.47.0",
     "@tailwindcss/vite": "^4.1.13",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.1",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
@@ -33,8 +35,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "nx": "^20.1.0",
     "prettier": "^3.6.2",
-    "vite": "^7.1.2",
-    "nx": "^20.1.0"
+    "vite": "^7.1.2"
   }
 }

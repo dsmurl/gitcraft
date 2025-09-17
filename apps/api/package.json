@@ -2,18 +2,19 @@
   "name": "@gitcraft/api",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
+    "dev": "tsx watch -r tsconfig-paths/register src/main.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/main.js"
+    "start": "node -r tsconfig-paths/register dist/main.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-session": "^1.17.3",
-    "undici": "^6.19.8"
+    "undici": "^6.19.8",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
