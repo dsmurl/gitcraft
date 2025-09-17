@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "nx run-many -t dev --parallel",
     "build": "nx run-many -t build --parallel",
+    "build:web": "nx run web:build",
+    "build:api": "nx run api:build",
     "lint": "nx run web:lint",
     "preview": "nx run web:preview",
     "web:dev": "nx run web:dev",

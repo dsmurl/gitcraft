@@ -1,5 +1,7 @@
 # Full Stack FastAPI and PostgreSQL - Boilerplate
 
+
+
 Work Roadmap:
 
 - [X] Web base
@@ -24,3 +26,10 @@ Work Roadmap:
   - to build a gitCraft site that other people can login and see their numbers
 - [ ] Intro credit store
   - to build out a simple store for people to spend their credits at
+
+
+### Prod builds
+- `pnpm run build:web`
+  - `pnpm dlx serve -s apps/web/dist -l 4173`
+- `pnpm run build:api`
+  - `pnpm run api:start`
