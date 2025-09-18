@@ -14,5 +14,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "api", "vite.config.ts", "postcss.config.js"]
+  "include": ["src", "api", "docs", "vite.config.ts", "postcss.config.js"]
 }

@@ -5,6 +5,6 @@
   - TanStack query
 - Express + TypeScript backend
   - OAuth with GitHub and Google
-  - prisma 
+  - prisma
 - Shared types
-- 
+-

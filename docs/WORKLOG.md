@@ -1,11 +1,13 @@
 # WorkLog
 
 ### 2025-09-15
+
 - Made the base plan and road map for the project
 - Build the base of the nx repo with apps/web and apps/api
 - Worked out the pnx project and the package.json
 
 ### 2025-09-16
+
 - Added cleanup scripts
 - Added the package build scripts for the api and the web
 - New web site with clerk and new api with some test routes. new docs section. nx adjusted apps
@@ -14,5 +16,6 @@
 - Updated the ReadMe and doc structure
 
 ### 2025-09-17
+
 - TODO
-- 
+-

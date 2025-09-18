@@ -18,6 +18,9 @@ Work Roadmap:
   - make the CRUD for Users and link them to a google account
 - [ ] Auth with GitHub
   - try to get a GitHub auth strategy in the front end and protect api routes
+- [ ] TanStack query
+  - to build out a simple query system for the front end to talk to the api
+  - utilize resources, queries, and cache
 - [ ] Github scan
   - to build a simple GitHub analysis tool
 - [ ] Public github scan
