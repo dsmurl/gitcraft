@@ -4,6 +4,7 @@ import {
   updateSettings,
   readAndIncrement,
 } from '@/routes/test/counterStore';
+import { requireAuth, getAuth } from '@clerk/express';
 
 export const router = Router();
 
@@ -29,4 +30,10 @@ router.post('/settings', (req, res) => {
   const { value, step } = req.body ?? {};
   const updated = updateSettings({ value, step });
   res.json(updated);
+});
+
+// GET /api/test/private -> protected endpoint (requires valid Clerk bearer token)
+router.get('/private', requireAuth(), (req, res) => {
+  const { userId, sessionId, orgId } = getAuth(req);
+  res.json({ ok: true, userId, sessionId, orgId });
 });

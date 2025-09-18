@@ -8,7 +8,7 @@ Work Roadmap:
 - [x] Api base
   - to build an api
     - has simple test routes that are unprotected
-- [ ] Api base clerk
+- [x] Api base clerk
   - has protected routes that require an auth from the clerk front end
 - [ ] Api DB simple
   - connects the database with sqlite

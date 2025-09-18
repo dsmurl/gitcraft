@@ -17,5 +17,6 @@
 
 ### 2025-09-17
 
-- TODO
--
+- Added the clerk auth processing to the api
+  - Added a protected api route that returns the auth data for the current session
+- Added a test button for the auth api route to test the auth flow in the web app
