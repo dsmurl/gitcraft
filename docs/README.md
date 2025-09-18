@@ -20,9 +20,9 @@ Work Roadmap:
   - make a User table and retrieve a user from the database
   - will need some sort of new user signup page and signup end points
   - make the CRUD for Users and link them to a google account
+- [x] Web account page where info can be changed
   - make an account page for the user to see their info
     - add edit form for the user to change their info
-- [ ] Web account page where info can be changed
 - [ ] Auth with GitHub
   - try to get a GitHub auth strategy in the front end and protect api routes
 - [ ] TanStack query
