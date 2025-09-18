@@ -6,6 +6,7 @@ import {
   SignInButton,
   UserButton,
 } from '@clerk/clerk-react';
+import gearIcon from '../images/svg/gear.svg';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`;
@@ -17,7 +18,7 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-6">
             <Link to="/" className="text-white font-semibold">
-              My Site
+              Based Site
             </Link>
             <nav className="flex items-center gap-2">
               <NavLink to="/" className={navLinkClass} end>
@@ -32,6 +33,7 @@ export default function Header() {
               <NavLink to="/protected" className={navLinkClass}>
                 Protected
               </NavLink>
+              {/* Account link removed; moved to gear icon near avatar */}
             </nav>
           </div>
           <div className="flex items-center gap-3">
@@ -43,6 +45,14 @@ export default function Header() {
               </SignInButton>
             </SignedOut>
             <SignedIn>
+              <Link
+                to="/account"
+                aria-label="Account settings"
+                title="Account"
+                className="rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+              >
+                <img src={gearIcon} alt="account" className="h-5 w-5" />
+              </Link>
               <UserButton
                 appearance={{ elements: { userButtonBox: 'text-white' } }}
               />

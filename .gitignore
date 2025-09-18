@@ -50,3 +50,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Local Prisma data directory (SQLite for dev)
+libs/prisma/prisma/data/
+!libs/prisma/prisma/data/.gitkeep

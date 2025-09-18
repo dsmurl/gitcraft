@@ -1,0 +1,36 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "prisma",
+  "projectType": "library",
+  "sourceRoot": "libs/prisma/src",
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/prisma",
+        "command": "pnpm run generate"
+      }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/prisma",
+        "command": "pnpm run migrate:dev"
+      }
+    },
+    "studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/prisma",
+        "command": "pnpm exec prisma studio"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/prisma",
+        "command": "pnpm run build"
+      }
+    }
+  }
+}

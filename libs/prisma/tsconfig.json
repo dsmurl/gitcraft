@@ -7,17 +7,12 @@
     "lib": ["ES2022"],
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"],
-      "@gitcraft/prisma": ["../../../libs/prisma/src/index.ts"]
-    },
+    "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": ["node", "express-session"]
+    "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["src/**/*.ts"]
 }

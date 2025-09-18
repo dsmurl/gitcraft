@@ -3,6 +3,7 @@
   "name": "api",
   "projectType": "application",
   "sourceRoot": "apps/api/src",
+  "implicitDependencies": ["prisma"],
   "targets": {
     "dev": {
       "executor": "nx:run-commands",

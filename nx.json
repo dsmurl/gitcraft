@@ -11,6 +11,9 @@
     },
     "api": {
       "root": "apps/api"
+    },
+    "prisma": {
+      "root": "libs/prisma"
     }
   },
   "targetDefaults": {

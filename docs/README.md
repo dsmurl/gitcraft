@@ -10,12 +10,19 @@ Work Roadmap:
     - has simple test routes that are unprotected
 - [x] Api base clerk
   - has protected routes that require an auth from the clerk front end
-- [ ] Api DB simple
+- [x] Api DB simple
+  - some sort of prisma setup with sqlite
   - connects the database with sqlite
   - get a simple value and augment and decrement a test value in a counter table
-- [ ] Api Db user
+  - generate the prisma client scripts and migrations
+  - setup prisma studio in nx target
+- [x] Api Db user
   - make a User table and retrieve a user from the database
+  - will need some sort of new user signup page and signup end points
   - make the CRUD for Users and link them to a google account
+  - make an account page for the user to see their info
+    - add edit form for the user to change their info
+- [ ] Web account page where info can be changed
 - [ ] Auth with GitHub
   - try to get a GitHub auth strategy in the front end and protect api routes
 - [ ] TanStack query

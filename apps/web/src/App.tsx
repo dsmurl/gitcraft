@@ -7,6 +7,7 @@ import PublicPage from './pages/PublicPage';
 import AboutPage from './pages/AboutPage';
 import ProtectedPage from './pages/ProtectedPage';
 import LoginPage from './pages/LoginPage';
+import AccountPage from './pages/AccountPage';
 
 export default function App() {
   return (
@@ -22,6 +23,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <ProtectedPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <ProtectedRoute>
+                <AccountPage />
               </ProtectedRoute>
             }
           />

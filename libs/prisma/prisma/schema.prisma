@@ -1,0 +1,21 @@
+// Prisma schema for the shared database
+datasource db {
+  provider = "sqlite" // swap to "postgresql" later if desired
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  clerkUserId   String   @unique
+  email         String   @unique
+  firstName     String?
+  lastName      String?
+  companyName   String?
+  clerkOrgName  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

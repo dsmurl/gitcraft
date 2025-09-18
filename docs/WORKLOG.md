@@ -20,3 +20,15 @@
 - Added the clerk auth processing to the api
   - Added a protected api route that returns the auth data for the current session
 - Added a test button for the auth api route to test the auth flow in the web app
+- Api DB simple
+  - prisma setup with sqlite
+    - new lib/prisma nx lib
+  - generate the prisma client scripts and migrations
+  - setup prisma studio in nx target
+- Api Db user
+  - make a User table and retrieve a user from the database
+  - will need some sort of new user signup page and signup end points
+  - make the CRUD for Users and link them to a google account
+  - make an account page for the user to see their info
+    - add edit form for the user to change their info
+  - created svg icons and dir for the web app

@@ -1,0 +1,23 @@
+{
+  "name": "@gitcraft/prisma",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.20.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.20.0",
+    "typescript": "^5.6.3"
+  }
+}
