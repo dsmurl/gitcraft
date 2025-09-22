@@ -6,10 +6,11 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "tsx watch -r tsconfig-paths/register src/main.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node dist/main.js"
   },
   "dependencies": {
+    "@gitcraft/prisma": "workspace:*",
     "@clerk/express": "^1.7.31",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",

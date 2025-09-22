@@ -27,6 +27,7 @@
     },
     "preview": {
       "executor": "nx:run-commands",
+      "dependsOn": ["build"],
       "options": {
         "cwd": "apps/web",
         "command": "vite preview"

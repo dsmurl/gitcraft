@@ -21,6 +21,7 @@
     "prisma:generate": "nx run prisma:generate",
     "prisma:migrate": "nx run prisma:migrate",
     "prisma:studio": "nx run prisma:studio",
+    "prisma:build": "nx run prisma:build",
     "prettier": "prettier --write .",
     "nx:reset": "nx reset",
     "clean:dist": "rm -rf apps/*/dist apps/*/.vite .nx node_modules/.cache",

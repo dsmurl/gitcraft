@@ -5,11 +5,22 @@ import { clerkMiddleware } from '@clerk/express';
 
 const app = express();
 
-// Basic CORS for dev: allow web client to call API and send Authorization header
+// CORS: allowlist multiple origins via WEB_ORIGIN (comma-separated) and reflect matching origin
+const allowedOrigins: string[] = (
+  (process.env.WEB_ORIGIN as string) ?? 'http://localhost:5173'
+)
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 app.use((req, res, next) => {
-  const origin = (process.env.WEB_ORIGIN as string) ?? 'http://localhost:5173';
-  res.header('Access-Control-Allow-Origin', origin);
-  res.header('Vary', 'Origin');
+  const originHeader = req.headers.origin as string | undefined;
+
+  if (originHeader && allowedOrigins.includes(originHeader)) {
+    res.header('Access-Control-Allow-Origin', originHeader);
+    res.header('Vary', 'Origin');
+  }
+
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.header(

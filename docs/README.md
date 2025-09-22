@@ -2,6 +2,7 @@
 
 Work Roadmap:
 
+- [x] base nx setup with web and api apps
 - [x] Web base
   - to build a simple web base for a commercial website
     - simple login to web with clerk
@@ -23,6 +24,14 @@ Work Roadmap:
 - [x] Web account page where info can be changed
   - make an account page for the user to see their info
     - add edit form for the user to change their info
+- [x] Added GitHub OAuth in Clerk stratagy list
+- [ ] Normalize the nx targets 
+  - [ ] normalize the build for all targets in the nx workspace
+  - [ ] run through the entire build process and document the running in dev and prod
+- [ ] pulumi launch
+  - [ ] build pulumi stack
+  - [ ] deploy pulumi stack
+  - [ ] run pulumi destroy
 - [ ] Auth with GitHub
   - try to get a GitHub auth strategy in the front end and protect api routes
 - [ ] TanStack query
