@@ -25,13 +25,17 @@ Work Roadmap:
   - make an account page for the user to see their info
     - add edit form for the user to change their info
 - [x] Added GitHub OAuth in Clerk stratagy list
-- [ ] Normalize the nx targets 
-  - [ ] normalize the build for all targets in the nx workspace
-  - [ ] run through the entire build process and document the running in dev and prod
+- [x] Normalize the nx targets 
+  - [x] normalize the build for all targets in the nx workspace
+  - [x] run through the entire build process and document the running in dev and prod
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack
   - [ ] run pulumi destroy
+- [ ] Spike on docker
+  - [ ] would docker help the build process or help the pulumi deploy?
+- [ ] Auth with Google
+  - try to get a Google auth strategy in the front end and protect api routes
 - [ ] Auth with GitHub
   - try to get a GitHub auth strategy in the front end and protect api routes
 - [ ] TanStack query

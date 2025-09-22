@@ -37,13 +37,13 @@
 
 - added GitHub strategy to the Clerk configuration of mono-base-fe-be
 - api allows multiple origin from .env now
-- got the buidl targets working except stilla problem with api:build
--
+- got the build targets working except stilla problem with api:build
+
+### 2025-09-21
+
+- fixed: got the build targets working except stilla problem with api:build
+- got the dev, build, and serve targets working
 
 ### Next
 
-- [ ] figure out -> got the buidl targets working except stilla problem with api:build
-
-- [ ] normalized the build for all targets in the nx workspace
-- [ ] run through the entire build process and document the running in dev and prod
-
+- look into pulumi options or docker options
