@@ -24,7 +24,7 @@ Work Roadmap:
 - [x] Web account page where info can be changed
   - make an account page for the user to see their info
     - add edit form for the user to change their info
-- [x] Added GitHub OAuth in Clerk stratagy list
+- [x] Added GitHub OAuth in Clerk strategy list
 - [x] Normalize the nx targets 
   - [x] normalize the build for all targets in the nx workspace
   - [x] run through the entire build process and document the running in dev and prod
@@ -44,13 +44,6 @@ Work Roadmap:
 - [ ] Github scan
   - to build a simple GitHub analysis tool
 - [ ] Public github scan
-  - to build a gitCraft site that other people can login and see their numbers
+  - to build a gitCraft site that other people can log in and see their numbers
 - [ ] Intro credit store
   - to build out a simple store for people to spend their credits at
-
-### Prod builds
-
-- `pnpm run build:web`
-  - `pnpm dlx serve -s apps/web/dist -l 4173`
-- `pnpm run build:api`
-  - `pnpm run api:start`
