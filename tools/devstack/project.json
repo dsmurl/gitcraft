@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "devstack",
+  "projectType": "application",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": true,
+        "commands": [
+          { "command": "nx run drizzle:dev" },
+          { "command": "nx run api:dev" }
+        ]
+      }
+    }
+  }
+}

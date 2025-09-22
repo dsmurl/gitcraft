@@ -25,9 +25,14 @@ Work Roadmap:
   - make an account page for the user to see their info
     - add edit form for the user to change their info
 - [x] Added GitHub OAuth in Clerk strategy list
-- [x] Normalize the nx targets 
+- [x] Normalize the nx targets
   - [x] normalize the build for all targets in the nx workspace
   - [x] run through the entire build process and document the running in dev and prod
+- [x] Look to implement turso
+  - [x] switch to drizzle
+  - [ ] get migration working and execute on the User type in the web user-details form
+  - [ ] ge the prod build working once
+  - [ ] comb through and realign all the build targets for nx
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack
@@ -47,3 +52,12 @@ Work Roadmap:
   - to build a gitCraft site that other people can log in and see their numbers
 - [ ] Intro credit store
   - to build out a simple store for people to spend their credits at
+
+### Next
+
+- [ ] the move to drizzle broke the db interaction and the migrations are not working
+- [ ] need to figure out how to use the new drizzle in the db setup and drizzle Studio in dev
+
+### Debt
+
+- [ ] remove the counter stuff like api endpoints and COUNTER_INITIAL

@@ -1,0 +1,50 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "drizzle",
+  "projectType": "library",
+  "sourceRoot": "libs/drizzle/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/drizzle",
+        "command": "pnpm run build"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/drizzle",
+        "command": "pnpm run dev"
+      }
+    },
+    "db:generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/drizzle",
+        "command": "pnpm run db:generate"
+      }
+    },
+    "db:migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/drizzle",
+        "command": "pnpm run db:migrate"
+      }
+    },
+    "db:studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/drizzle",
+        "command": "pnpm run db:studio"
+      }
+    },
+    "db:init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/drizzle",
+        "command": "pnpm run db:init"
+      }
+    }
+  }
+}

@@ -43,6 +43,11 @@
 
 - fixed: got the build targets working except stilla problem with api:build
 - got the dev, build, and serve targets working
+- started migrations with drizzle with new lib, removed prisma
+- copied prisma schema to drizzle
+- created base drizzle nx structure and nx dep in api and other libs
+- the dev build is currently broken
+  - drizzle migrate isn't executing to create the user table
 
 ### Next
 

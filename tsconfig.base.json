@@ -6,9 +6,6 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "baseUrl": ".",
-    "paths": {
-      "@gitcraft/prisma": ["libs/prisma/src/index.ts"]
-    },
     "allowJs": true,
     "skipLibCheck": true
   }

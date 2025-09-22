@@ -9,8 +9,7 @@
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"],
-      "@gitcraft/prisma": ["../../../libs/prisma/src/index.ts"]
+      "@/*": ["*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

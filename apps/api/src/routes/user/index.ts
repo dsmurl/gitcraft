@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { requireAuth, getAuth, clerkClient } from '@clerk/express';
-import { getPrisma } from '@gitcraft/prisma';
+import { getDb, users, type User } from '@gitcraft/db';
+import { eq } from 'drizzle-orm';
 
 export const router = Router();
 
@@ -16,6 +17,10 @@ async function getClerkOrgName(orgId?: string) {
   }
 }
 
+function isEmpty(v?: string | null) {
+  return !v || v.trim() === '';
+}
+
 // GET /api/user/me -> return the current user's DB record by clerkUserId
 router.get('/me', requireAuth(), async (req, res) => {
   try {
@@ -23,10 +28,12 @@ router.get('/me', requireAuth(), async (req, res) => {
     if (!userId) {
       return res.status(401).json({ ok: false, error: 'UNAUTHENTICATED' });
     }
-    const prisma = getPrisma();
-    const user = await prisma.user.findUnique({
-      where: { clerkUserId: userId },
-    });
+    const db = getDb();
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.clerkUserId, userId))
+      .get();
     if (!user) {
       return res.status(404).json({ ok: false, error: 'USER_NOT_FOUND' });
     }
@@ -71,32 +78,37 @@ router.post('/ensure', requireAuth(), async (req, res) => {
 
     const clerkOrgName = await getClerkOrgName(orgId);
 
-    const prisma = getPrisma();
-    const existing = await prisma.user.findUnique({
-      where: { clerkUserId: userId },
-    });
+    const db = getDb();
+    const existing = await db
+      .select()
+      .from(users)
+      .where(eq(users.clerkUserId, userId))
+      .get();
 
     // If no record exists, create it with Clerk-derived values (and optional body overrides)
     if (!existing) {
-      const user = await prisma.user.create({
-        data: {
-          clerkUserId: userId,
-          email,
-          ...(fallbackFirst !== undefined ? { firstName: fallbackFirst } : {}),
-          ...(fallbackLast !== undefined ? { lastName: fallbackLast } : {}),
-          ...(fallbackCompany !== undefined
-            ? { companyName: fallbackCompany }
-            : {}),
-          ...(clerkOrgName !== undefined ? { clerkOrgName } : {}),
-        },
-      });
+      const nowIso = new Date().toISOString();
+      const newUserValues: Omit<User, 'id'> & { id: string } = {
+        id: crypto.randomUUID(),
+        clerkUserId: userId,
+        email,
+        firstName: fallbackFirst,
+        lastName: fallbackLast,
+        companyName: fallbackCompany,
+        clerkOrgName: clerkOrgName,
+        createdAt: nowIso,
+        updatedAt: nowIso,
+      };
+      const user = await db
+        .insert(users)
+        .values(newUserValues)
+        .returning()
+        .get();
       return res.status(200).json({ ok: true, user });
     }
 
     // If record exists, only backfill fields that are empty/null; preserve user edits.
-    const isEmpty = (v?: string | null) => !v || v.trim() === '';
-    const updateData: Record<string, unknown> = {};
-
+    const updateData: Partial<User> = {};
     if (isEmpty(existing.firstName) && fallbackFirst !== undefined) {
       updateData.firstName = fallbackFirst;
     }
@@ -110,21 +122,22 @@ router.post('/ensure', requireAuth(), async (req, res) => {
     if (clerkOrgName !== undefined) {
       updateData.clerkOrgName = clerkOrgName;
     }
-
     if (Object.keys(updateData).length === 0) {
       return res.status(200).json({ ok: true, user: existing });
     }
+    updateData.updatedAt = new Date().toISOString();
 
-    const user = await prisma.user.update({
-      where: { clerkUserId: userId },
-      data: updateData,
-    });
+    const user = await db
+      .update(users)
+      .set(updateData)
+      .where(eq(users.clerkUserId, userId))
+      .returning()
+      .get();
+
     return res.status(200).json({ ok: true, user });
   } catch (err: any) {
-    if (
-      typeof err?.message === 'string' &&
-      err.message.includes('Unique constraint')
-    ) {
+    const msg = String(err?.message ?? '');
+    if (msg.includes('UNIQUE')) {
       return res.status(409).json({
         ok: false,
         error: 'CONFLICT',
@@ -151,7 +164,7 @@ router.patch('/me', requireAuth(), async (req, res) => {
     const companyName = (req.body?.companyName as string | undefined)?.trim();
     const clerkOrgName = await getClerkOrgName(orgId);
 
-    const updateData: Record<string, unknown> = {};
+    const updateData: Partial<User> = {};
     if (firstName !== undefined) updateData.firstName = firstName;
     if (lastName !== undefined) updateData.lastName = lastName;
     if (companyName !== undefined) updateData.companyName = companyName;
@@ -164,24 +177,24 @@ router.patch('/me', requireAuth(), async (req, res) => {
         message: 'Provide at least one of firstName, lastName, or companyName.',
       });
     }
+    updateData.updatedAt = new Date().toISOString();
 
-    const prisma = getPrisma();
-    const user = await prisma.user.update({
-      where: { clerkUserId: userId },
-      data: updateData,
-    });
-    return res.json({ ok: true, user });
-  } catch (err: any) {
-    if (
-      typeof err?.message === 'string' &&
-      err.message.includes('Record to update not found')
-    ) {
+    const db = getDb();
+    const updated = await db
+      .update(users)
+      .set(updateData)
+      .where(eq(users.clerkUserId, userId))
+      .returning()
+      .get();
+
+    if (!updated) {
       return res.status(404).json({ ok: false, error: 'USER_NOT_FOUND' });
     }
-    if (
-      typeof err?.message === 'string' &&
-      err.message.includes('Unique constraint')
-    ) {
+
+    return res.json({ ok: true, user: updated });
+  } catch (err: any) {
+    const msg = String(err?.message ?? '');
+    if (msg.includes('UNIQUE')) {
       return res.status(409).json({
         ok: false,
         error: 'CONFLICT',

@@ -12,8 +12,11 @@
     "api": {
       "root": "apps/api"
     },
-    "prisma": {
-      "root": "libs/prisma"
+    "drizzle": {
+      "root": "libs/drizzle"
+    },
+    "devstack": {
+      "root": "tools/devstack"
     }
   },
   "targetDefaults": {

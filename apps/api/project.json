@@ -3,11 +3,10 @@
   "name": "api",
   "projectType": "application",
   "sourceRoot": "apps/api/src",
-  "implicitDependencies": ["prisma"],
+  "implicitDependencies": ["drizzle"],
   "targets": {
     "dev": {
       "executor": "nx:run-commands",
-        "dependsOn": ["^generate"],
       "options": {
         "cwd": "apps/api",
         "command": "pnpm run dev"
@@ -15,7 +14,6 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": ["^build", "^generate"],
       "options": {
         "cwd": "apps/api",
         "command": "pnpm run build"
