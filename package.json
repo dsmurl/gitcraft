@@ -24,7 +24,7 @@
     "prisma:build": "nx run prisma:build",
     "prettier": "prettier --write .",
     "nx:reset": "nx reset",
-    "clean:dist": "rm -rf apps/*/dist apps/*/.vite .nx node_modules/.cache",
+    "clean:dist": "rm -rf apps/*/dist libs/*/dist apps/*/.vite .nx node_modules/.cache",
     "clean:modules": "rm -rf node_modules apps/*/node_modules",
     "clean": "pnpm run nx:reset && pnpm run clean:dist",
     "clean:all": "pnpm run clean && pnpm run clean:modules && pnpm store prune"
