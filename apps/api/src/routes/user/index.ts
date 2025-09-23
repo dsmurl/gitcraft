@@ -29,7 +29,7 @@ router.get('/me', requireAuth(), async (req, res) => {
       return res.status(401).json({ ok: false, error: 'UNAUTHENTICATED' });
     }
     const db = getDb();
-    const user = await db
+    const user: User = await db
       .select()
       .from(users)
       .where(eq(users.clerkUserId, userId))

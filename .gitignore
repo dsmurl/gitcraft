@@ -54,3 +54,15 @@ Thumbs.db
 # Local Prisma data directory (SQLite for dev)
 libs/prisma/prisma/data/
 !libs/prisma/prisma/data/.gitkeep
+
+# SQLite databases (dev/local artifacts)
+# Ignore DB files anywhere in the repo, including libs/drizzle/local.sqlite and any app-level copies.
+*.sqlite
+*.sqlite3
+*.db
+**/local.sqlite
+
+# SQLite write-ahead log and shared memory files
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal

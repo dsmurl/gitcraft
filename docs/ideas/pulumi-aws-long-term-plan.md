@@ -1,17 +1,19 @@
-
 Pulumi AWS Deployment Plan (Web + API)
 STATUS:
-  - RESEARCH
-  - would be a strong long term choice
-  - could be expensive and long developement path
-  - is very enterprise
+
+- RESEARCH
+- would be a strong long term choice
+- could be expensive and long developement path
+- is very enterprise
 
 Executive Summary
+
 - Goal: Deploy the web (React) and API (Express) apps to AWS using Pulumi (TypeScript) with secure, scalable, observable, and cost-aware infrastructure, supporting multiple environments (dev/stage/prod).
 - Core: VPC (multi-AZ), ECS Fargate + ALB for API, ECR for images, RDS PostgreSQL for data (via Prisma), S3 + CloudFront for web static hosting, Secrets Manager/SSM for secrets/config, Route53 + ACM for DNS/SSL, GitHub Actions CI/CD with Pulumi.
 - Alternatives to consider to simplify ops/cost: AWS App Runner (instead of ECS), or Lambda + API Gateway (instead of ALB/ECS) with an Express adapter.
 
 High-Level Architecture
+
 - Networking
   - VPC spanning 2–3 AZs.
   - Public subnets: ALB and NAT (if using private workloads).
@@ -56,6 +58,7 @@ High-Level Architecture
   - CloudFront cache optimization reduces S3/Origin cost.
 
 Pulumi Project Structure (TypeScript)
+
 - Repo structure suggestion
   - pulumi/
     - package.json (pulumi, @pulumi/aws, @pulumi/awsx, @pulumi/docker, etc.)
@@ -82,8 +85,9 @@ Pulumi Project Structure (TypeScript)
   - SecretsComponent: define or lookup Secrets Manager entries; wire into ECS task definition env.
 
 Suggested Pulumi Resources (Mapping)
+
 - Networking
-  - awsx.ec2.Vpc (or hand-rolled aws.ec2.* resources for full control)
+  - awsx.ec2.Vpc (or hand-rolled aws.ec2.\* resources for full control)
   - aws.ec2.SecurityGroup for ALB, ECS, and RDS
 - API
   - aws.ecr.Repository for container images
@@ -103,6 +107,7 @@ Suggested Pulumi Resources (Mapping)
   - aws.ssm.Parameter (if desired)
 
 Environment and Secrets (Examples)
+
 - API (ECS task env)
   - NODE_ENV=production
   - PORT=3001
@@ -128,15 +133,16 @@ Environment and Secrets (Examples)
   - certs.emailValidation or DNS validation settings
 
 CI/CD (GitHub Actions + Pulumi)
+
 - Secrets in GitHub
   - AWS credentials (role-based with OIDC recommended).
   - PULUMI_ACCESS_TOKEN (GitHub App or personal access token).
   - Any build-time secrets (avoid, prefer Pulumi-managed infra to hold runtime secrets).
 - Pipeline outline
   - On push to main (prod) or to specific branches (dev/stage):
-    1) Build web: npm ci && build; upload artifacts; Pulumi step syncs web assets to S3; then CloudFront invalidation for index.html and changed paths.
-    2) Build API image: docker build; tag; login to ECR; push.
-    3) Pulumi up: 
+    1. Build web: npm ci && build; upload artifacts; Pulumi step syncs web assets to S3; then CloudFront invalidation for index.html and changed paths.
+    2. Build API image: docker build; tag; login to ECR; push.
+    3. Pulumi up:
        - If first time, infra is created (VPC, RDS, ECS, ALB, S3, CF, etc.).
        - On updates: new API image digest is injected into Task Definition; ECS service is updated (rolling/blue-green).
        - Run DB migrations: one-off ECS task with the new image to run npx prisma migrate deploy (guarded to run only once per deploy).
@@ -147,57 +153,82 @@ CI/CD (GitHub Actions + Pulumi)
   - Pulumi: use stack history to pinpoint infra changes.
 
 Deployment Steps (Initial Bring-Up)
-1) Prerequisites
-  - AWS account, Route53 zone for your domain.
-  - Register/acquire domain if needed.
-  - Clerk production keys and configuration ready.
-  - Create Pulumi org and access token; set up GitHub OIDC to assume an AWS role.
-2) Containerize API
-  - Add a Dockerfile for the API (multi-stage build for small runtime image).
-  - Local test: docker run -p 3001:3001 … and ensure /health works.
-3) Create Pulumi Project
-  - pulumi new aws-typescript (or initialize a custom TypeScript project).
-  - Add @pulumi/aws, @pulumi/awsx, @pulumi/docker if using Docker builds; consider building in CI instead and using ECR-only in Pulumi (less coupling).
-4) Networking + Base Infra
-  - Provision VPC, subnets, route tables, NAT gateways, endpoints (optional).
-  - Create Security Groups for ALB, ECS, and RDS with least-privilege rules.
-5) RDS PostgreSQL
-  - Create subnet group in private subnets.
-  - Provision DB, set master credentials via Secrets Manager.
-  - Output DATABASE_URL as a secret Pulumi output for reference (do not log).
-6) ECR + ECS + ALB
-  - Create ECR repository for api.
-  - Create IAM roles for task execution and task.
-  - Create CloudWatch Log Group for api.
-  - Define Task Definition with environment and secrets (CLERK_SECRET_KEY, DATABASE_URL).
-  - Create ALB, Target Group, HTTPS Listener (ACM cert), security groups.
-  - Create ECS Service in private subnets; attach to Target Group; health check /health.
-7) Web Static Hosting
-  - Create S3 bucket (private).
-  - Create ACM cert in us-east-1 for CloudFront.
-  - Create CloudFront distribution with S3 origin using OAC/OAI.
-  - Set cache policies (long TTL for hashed assets, short for index.html).
-8) DNS
-  - Create Route53 records for web and api pointing to CloudFront and ALB respectively.
-9) CI/CD
-  - Add GitHub Actions workflows:
-    - Build and push API image to ECR.
-    - Pulumi up for stack (dev/stage/prod).
-    - Sync web build to S3 and invalidate CloudFront.
-    - One-off DB migration task execution.
-10) Validation
-  - Smoke tests for /health and a protected API route.
-  - End-to-end test with the web front end hitting the deployed API.
-11) Scaling + Hardening
-  - Set ECS service scaling policies and min/max capacities.
-  - Add alarms (5xx rates, CPU/Memory, RDS connections).
-  - Enable ALB access logs to S3; consider X-Ray and structured logs.
-12) Cost Review
-  - Evaluate NAT costs, consider VPC endpoints.
-  - Consider App Runner for API as a simpler alternative (auto builds/deployments, HTTPS, autoscaling).
-  - Consider Lambda + API Gateway if traffic is spiky and latency budget fits.
+
+1. Prerequisites
+
+- AWS account, Route53 zone for your domain.
+- Register/acquire domain if needed.
+- Clerk production keys and configuration ready.
+- Create Pulumi org and access token; set up GitHub OIDC to assume an AWS role.
+
+2. Containerize API
+
+- Add a Dockerfile for the API (multi-stage build for small runtime image).
+- Local test: docker run -p 3001:3001 … and ensure /health works.
+
+3. Create Pulumi Project
+
+- pulumi new aws-typescript (or initialize a custom TypeScript project).
+- Add @pulumi/aws, @pulumi/awsx, @pulumi/docker if using Docker builds; consider building in CI instead and using ECR-only in Pulumi (less coupling).
+
+4. Networking + Base Infra
+
+- Provision VPC, subnets, route tables, NAT gateways, endpoints (optional).
+- Create Security Groups for ALB, ECS, and RDS with least-privilege rules.
+
+5. RDS PostgreSQL
+
+- Create subnet group in private subnets.
+- Provision DB, set master credentials via Secrets Manager.
+- Output DATABASE_URL as a secret Pulumi output for reference (do not log).
+
+6. ECR + ECS + ALB
+
+- Create ECR repository for api.
+- Create IAM roles for task execution and task.
+- Create CloudWatch Log Group for api.
+- Define Task Definition with environment and secrets (CLERK_SECRET_KEY, DATABASE_URL).
+- Create ALB, Target Group, HTTPS Listener (ACM cert), security groups.
+- Create ECS Service in private subnets; attach to Target Group; health check /health.
+
+7. Web Static Hosting
+
+- Create S3 bucket (private).
+- Create ACM cert in us-east-1 for CloudFront.
+- Create CloudFront distribution with S3 origin using OAC/OAI.
+- Set cache policies (long TTL for hashed assets, short for index.html).
+
+8. DNS
+
+- Create Route53 records for web and api pointing to CloudFront and ALB respectively.
+
+9. CI/CD
+
+- Add GitHub Actions workflows:
+  - Build and push API image to ECR.
+  - Pulumi up for stack (dev/stage/prod).
+  - Sync web build to S3 and invalidate CloudFront.
+  - One-off DB migration task execution.
+
+10. Validation
+
+- Smoke tests for /health and a protected API route.
+- End-to-end test with the web front end hitting the deployed API.
+
+11. Scaling + Hardening
+
+- Set ECS service scaling policies and min/max capacities.
+- Add alarms (5xx rates, CPU/Memory, RDS connections).
+- Enable ALB access logs to S3; consider X-Ray and structured logs.
+
+12. Cost Review
+
+- Evaluate NAT costs, consider VPC endpoints.
+- Consider App Runner for API as a simpler alternative (auto builds/deployments, HTTPS, autoscaling).
+- Consider Lambda + API Gateway if traffic is spiky and latency budget fits.
 
 Alternative Deploy Options (Tradeoffs)
+
 - App Runner
   - Pros: Simplified ops, HTTPS, autoscaling, logs; no VPC/NAT complexity if using public DB proxy or managed services.
   - Cons: VPC connector and private DB access add complexity; pricing vs ECS depends on load.
@@ -209,6 +240,7 @@ Alternative Deploy Options (Tradeoffs)
   - Cons: Less granular control than ECS; older patterns.
 
 Security Best Practices
+
 - Use Pulumi secrets for sensitive config; wire them into Secrets Manager.
 - Rotate credentials; do not bake secrets into images or commit to repo.
 - Lock down security groups; ALB is public, ECS and RDS are private.
@@ -216,16 +248,19 @@ Security Best Practices
 - Principle of least privilege IAM roles for ECS tasks and CI/CD.
 
 Rollout Strategy
+
 - Blue/green or canary on ECS:
   - Use CodeDeploy or weighted target groups with ALB for controlled rollout.
 - Database migrations:
   - Backward-compatible migrations first; deploy new app; remove old code in follow-up release.
 
 Local Dev Parity
+
 - docker-compose for API + Postgres for local testing (optional).
 - Keep environment variables aligned (dev .env files vs Pulumi stack configs).
 
 Next Steps Checklist
+
 - Add Dockerfile for API and confirm local run.
 - Initialize Pulumi project and dev stack.
 - Implement VPC, RDS, and ECS ALB service components.

@@ -7,13 +7,20 @@
   "targets": {
     "dev": {
       "executor": "nx:run-commands",
+      "dependsOn": ["^db:migrate"],
       "options": {
         "cwd": "apps/api",
-        "command": "pnpm run dev"
+        "command": "pnpm run dev",
+        "env": {
+          "SQLITE_FILE": "../../libs/drizzle/local.sqlite",
+          "NODE_OPTIONS": "--enable-source-maps"
+        },
+        "envFile": "apps/api/.env"
       }
     },
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
       "options": {
         "cwd": "apps/api",
         "command": "pnpm run build"
@@ -25,6 +32,19 @@
       "options": {
         "cwd": "apps/api",
         "command": "pnpm run start"
+      }
+    },
+    "start:local": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build", "^db:migrate"],
+      "options": {
+        "cwd": "apps/api",
+        "command": "pnpm run start",
+        "env": {
+          "SQLITE_FILE": "../../libs/drizzle/local.sqlite",
+          "NODE_OPTIONS": "--enable-source-maps"
+        },
+        "envFile": "apps/api/.env"
       }
     }
   }

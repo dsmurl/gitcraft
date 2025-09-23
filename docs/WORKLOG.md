@@ -49,6 +49,18 @@
 - the dev build is currently broken
   - drizzle migrate isn't executing to create the user table
 
+### 2025-09-22
+
+- got the drizzle config aligned properly to generate and migrate
+- aligned the env examples and the sqlite db vars to connect
+- aligned and connected the user table
+- played with intellij data viewer on User table
+- aligned all the nx project build rules for dev and prod
+  - and to include the drizzle
+- ran the dev and prod builds and loaded User from db in both
+- combed through the nx project files and aligned their dependencies to be robust
+- updated the docs
+
 ### Next
 
 - look into pulumi options or docker options

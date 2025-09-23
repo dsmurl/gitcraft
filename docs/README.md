@@ -30,9 +30,9 @@ Work Roadmap:
   - [x] run through the entire build process and document the running in dev and prod
 - [x] Look to implement turso
   - [x] switch to drizzle
-  - [ ] get migration working and execute on the User type in the web user-details form
-  - [ ] ge the prod build working once
-  - [ ] comb through and realign all the build targets for nx
+  - [x] get migration working and execute on the User type in the web user-details form
+  - [x] get the prod build working once
+  - [x] comb through and realign all the build targets for nx
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack
