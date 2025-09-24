@@ -40,13 +40,14 @@ Work Roadmap:
   - [x] get the turso public db up and running on dev
   - [x] get the turso public db up and running on prod
   - [x] set up the env vars to allow for single-source of db .env vars
-  - [ ] namespace the env per nx package
+  - [x] namespace the env per nx package
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack
   - [ ] run pulumi destroy
 - [ ] Spike on docker
   - [ ] would docker help the build process or help the pulumi deploy?
+- [ ] Apply error handling to calls in web. There are crashes and db problems rendering in the web app.
 - [ ] TanStack query
   - to build out a simple query system for the front end to talk to the api
   - utilize resources, queries, and cache

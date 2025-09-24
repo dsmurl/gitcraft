@@ -13,8 +13,7 @@ const app = express();
 
 // CORS: allowlist multiple origins via API_WEB_ORIGINS (comma-separated) and reflect matching origin.
 const allowedOrigins: string[] = (
-  (process.env.API_WEB_ORIGINS as string) ??
-  'http://localhost:5173'
+  (process.env.API_WEB_ORIGINS as string) ?? 'http://localhost:5173'
 )
   .split(',')
   .map((s) => s.trim())

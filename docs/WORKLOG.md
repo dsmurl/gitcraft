@@ -74,3 +74,7 @@
 ### Next
 
 - look into pulumi options or docker options
+
+### Todo
+
+- ensure on first load of a new user may be crashing the db call.
