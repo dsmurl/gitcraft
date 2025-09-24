@@ -61,6 +61,13 @@
 - combed through the nx project files and aligned their dependencies to be robust
 - updated the docs
 
+### 2025-09-23
+
+- Turso public db on dev and prod
+  - get the turso public db up and running on dev and prod
+  - set up the env vars to allow for single-source of db .env vars
+  - saw the net public db for both dev and prod running both sqlite file and turso db
+
 ### Next
 
 - look into pulumi options or docker options

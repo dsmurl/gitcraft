@@ -23,6 +23,6 @@ export default defineConfig({
         ),
       }
     : {
-        url: process.env.SQLITE_FILE || './local.sqlite',
+        url: process.env.SQLITE_FILE || './local.default.sqlite',
       },
 });

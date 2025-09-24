@@ -22,14 +22,16 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/drizzle",
-        "command": "pnpm run db:generate"
+        "command": "pnpm run db:generate",
+        "envFile": ".env"
       }
     },
     "db:migrate": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/drizzle",
-        "command": "pnpm run db:migrate"
+        "command": "pnpm run db:migrate",
+        "envFile": ".env"
       }
     },
     "db:studio": {

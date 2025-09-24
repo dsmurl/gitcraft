@@ -1,4 +1,10 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import { resolve } from 'node:path';
+
+// Load shared env first (workspace root), then allow app-specific overrides.
+dotenv.config({ path: resolve(process.cwd(), '../../.env') });
+dotenv.config({ path: resolve(process.cwd(), '.env') });
+
 import express from 'express';
 import { router as apiRouter } from '@/routes';
 import { clerkMiddleware } from '@clerk/express';

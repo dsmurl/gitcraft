@@ -24,25 +24,28 @@ Work Roadmap:
 - [x] Web account page where info can be changed
   - make an account page for the user to see their info
     - add edit form for the user to change their info
-- [x] Added GitHub OAuth in Clerk strategy list
+- [x] Auth with Google
+  - get a Google auth strategy in the front end and protect api routes
+- [x] Auth with GitHub
+  - get a GitHub auth strategy in the front end and protect api routes
 - [x] Normalize the nx targets
   - [x] normalize the build for all targets in the nx workspace
   - [x] run through the entire build process and document the running in dev and prod
-- [x] Look to implement turso
+- [x] Look to implement drizzle
   - [x] switch to drizzle
   - [x] get migration working and execute on the User type in the web user-details form
   - [x] get the prod build working once
   - [x] comb through and realign all the build targets for nx
+- [x] Turso public db on dev and prod
+  - [x] get the turso public db up and running on dev
+  - [x] get the turso public db up and running on prod
+  - [x] set up the env vars to allow for single-source of db .env vars
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack
   - [ ] run pulumi destroy
 - [ ] Spike on docker
   - [ ] would docker help the build process or help the pulumi deploy?
-- [ ] Auth with Google
-  - try to get a Google auth strategy in the front end and protect api routes
-- [ ] Auth with GitHub
-  - try to get a GitHub auth strategy in the front end and protect api routes
 - [ ] TanStack query
   - to build out a simple query system for the front end to talk to the api
   - utilize resources, queries, and cache
@@ -55,9 +58,7 @@ Work Roadmap:
 
 ### Next
 
-- [ ] the move to drizzle broke the db interaction and the migrations are not working
-- [ ] need to figure out how to use the new drizzle in the db setup and drizzle Studio in dev
-
-### Debt
+### Todo
 
 - [ ] remove the counter stuff like api endpoints and COUNTER_INITIAL
+- [ ] maybe add drizzle studio in the db setup
