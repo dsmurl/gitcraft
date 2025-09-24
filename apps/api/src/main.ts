@@ -11,9 +11,10 @@ import { clerkMiddleware } from '@clerk/express';
 
 const app = express();
 
-// CORS: allowlist multiple origins via WEB_ORIGIN (comma-separated) and reflect matching origin
+// CORS: allowlist multiple origins via API_WEB_ORIGINS (comma-separated) and reflect matching origin.
 const allowedOrigins: string[] = (
-  (process.env.WEB_ORIGIN as string) ?? 'http://localhost:5173'
+  (process.env.API_WEB_ORIGINS as string) ??
+  'http://localhost:5173'
 )
   .split(',')
   .map((s) => s.trim())
@@ -58,7 +59,7 @@ app.get('/', (_req, res) => {
   res.type('text').send('API is running. Try GET /health or /api/test/count');
 });
 
-// Start server
+// Start server: prefer API_PORT.
 const port = Number(process.env.API_PORT ?? 3001);
 app.listen(port, '0.0.0.0', () => {
   // eslint-disable-next-line no-console

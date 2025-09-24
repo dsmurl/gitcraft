@@ -40,6 +40,7 @@ Work Roadmap:
   - [x] get the turso public db up and running on dev
   - [x] get the turso public db up and running on prod
   - [x] set up the env vars to allow for single-source of db .env vars
+  - [ ] namespace the env per nx package
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack
@@ -60,5 +61,4 @@ Work Roadmap:
 
 ### Todo
 
-- [ ] remove the counter stuff like api endpoints and COUNTER_INITIAL
 - [ ] maybe add drizzle studio in the db setup

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { router as testRouter } from '@/routes/test';
-import { router as userRouter } from '@/routes/user';
+import { testRouter } from '@/routes/test';
+import { userRouter } from '@/routes/user';
 
 export const router = Router();
 

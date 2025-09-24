@@ -67,6 +67,9 @@
   - get the turso public db up and running on dev and prod
   - set up the env vars to allow for single-source of db .env vars
   - saw the net public db for both dev and prod running both sqlite file and turso db
+- cleaned initial debug/test counter stuff like api endpoints and COUNTER_INITIAL
+- updated the api readme with a simple endpoint map
+- aligned the env vars to be more namespaced per package
 
 ### Next
 

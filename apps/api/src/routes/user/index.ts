@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { requireAuth, getAuth, clerkClient } from '@clerk/express';
-import { getDb, users, type User } from '@gitcraft/db';
 import { eq } from 'drizzle-orm';
 
-export const router = Router();
+import { getDb, users, type User } from '@gitcraft/db';
+
+export const userRouter = Router();
 
 async function getClerkOrgName(orgId?: string) {
   if (!orgId) return undefined;
@@ -22,7 +23,7 @@ function isEmpty(v?: string | null) {
 }
 
 // GET /api/user/me -> return the current user's DB record by clerkUserId
-router.get('/me', requireAuth(), async (req, res) => {
+userRouter.get('/me', requireAuth(), async (req, res) => {
   try {
     const { userId } = getAuth(req);
     if (!userId) {
@@ -47,7 +48,7 @@ router.get('/me', requireAuth(), async (req, res) => {
 
 // POST /api/user/ensure -> upsert the current user's record
 // Body (optional): { firstName?: string, lastName?: string, companyName?: string }
-router.post('/ensure', requireAuth(), async (req, res) => {
+userRouter.post('/ensure', requireAuth(), async (req, res) => {
   try {
     const { userId, orgId } = getAuth(req);
     if (!userId) {
@@ -152,7 +153,7 @@ router.post('/ensure', requireAuth(), async (req, res) => {
 
 // PATCH /api/user/me -> update firstName, lastName, companyName (email cannot be changed)
 // Body: { firstName?: string, lastName?: string, companyName?: string }
-router.patch('/me', requireAuth(), async (req, res) => {
+userRouter.patch('/me', requireAuth(), async (req, res) => {
   try {
     const { userId, orgId } = getAuth(req);
     if (!userId) {

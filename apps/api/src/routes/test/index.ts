@@ -1,39 +1,15 @@
 import { Router } from 'express';
-import {
-  getSettings,
-  updateSettings,
-  readAndIncrement,
-} from '@/routes/test/counterStore';
 import { requireAuth, getAuth } from '@clerk/express';
 
-export const router = Router();
+export const testRouter = Router();
 
 // Simple ping
-router.get('/ping', (_req, res) => {
+testRouter.get('/ping', (_req, res) => {
   res.json({ ok: true });
 });
 
-// GET /api/test/count -> returns current count and increments it
-router.get('/count', (_req, res) => {
-  const { current, next } = readAndIncrement();
-  res.json({ count: current, next });
-});
-
-// GET /api/test/settings -> returns current settings
-router.get('/settings', (_req, res) => {
-  res.json(getSettings());
-});
-
-// POST /api/test/settings -> update value and/or step
-// Body: { "value"?: number, "step"?: number }
-router.post('/settings', (req, res) => {
-  const { value, step } = req.body ?? {};
-  const updated = updateSettings({ value, step });
-  res.json(updated);
-});
-
 // GET /api/test/private -> protected endpoint (requires valid Clerk bearer token)
-router.get('/private', requireAuth(), (req, res) => {
+testRouter.get('/private', requireAuth(), (req, res) => {
   const { userId, sessionId, orgId } = getAuth(req);
   res.json({ ok: true, userId, sessionId, orgId });
 });

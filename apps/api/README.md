@@ -2,7 +2,7 @@
 
 Base URL (default): `http://localhost:3001`
 
-Note: You can change the port using `API_PORT` in your environment.
+Note: Change the port with `API_PORT`. Configure allowed CORS origins via `API_WEB_ORIGINS` (comma-separated).
 
 ## Health
 
@@ -29,71 +29,70 @@ Note: You can change the port using `API_PORT` in your environment.
 
 ## Test Routes (`/api/test`)
 
-These routes exercise a simple in-memory counter that can be configured via API.
-
 - GET `/api/test/ping`
-  - Simple connectivity check.
+  - Public connectivity check.
   - Response: `{ "ok": true }`
 
-- GET `/api/test/count`
-  - Returns the current counter value and increments it for the next call.
+- GET `/api/test/private`
+  - Protected; requires a valid Clerk bearer token (`Authorization: Bearer <token>`).
   - Response example:
-    ```json
-    { "count": 5, "next": 6 }
-    ```
-
-- GET `/api/test/settings`
-  - Returns the current counter settings.
-  - Response example:
-    ```json
-    { "value": 10, "step": 2 }
-    ```
-
-- POST `/api/test/settings`
-  - Updates counter settings. Body fields are optional; only provided fields are updated.
-  - Request body (JSON):
     ```json
     {
-      "value": 100, // optional number
-      "step": 5 // optional number (non-zero)
+      "ok": true,
+      "userId": "user_123",
+      "sessionId": "sess_abc",
+      "orgId": "org_456"
     }
+    ```
+
+## User Routes (`/api/user`)
+
+All user routes require authentication via Clerk bearer token.
+
+- GET `/api/user/me`
+  - Returns the current user's record from the database.
+  - Response example:
+    ```json
+    {
+      "ok": true,
+      "user": {
+        /* user fields */
+      }
+    }
+    ```
+
+- POST `/api/user/ensure`
+  - Upserts the current user's record.
+  - Request body (JSON; all optional, server will backfill from Clerk when missing):
+    ```json
+    { "firstName": "Jane", "lastName": "Doe", "companyName": "Acme Inc." }
     ```
   - Response example:
     ```json
-    { "value": 100, "step": 5 }
+    {
+      "ok": true,
+      "user": {
+        /* user fields */
+      }
+    }
     ```
 
-## Environment Variables
+- PATCH `/api/user/me`
+  - Updates editable fields on the current user's record.
+  - Request body (JSON; provide at least one):
+    ```json
+    { "firstName": "Jane", "lastName": "Doe", "companyName": "Acme Inc." }
+    ```
+  - Response example:
+    ```json
+    {
+      "ok": true,
+      "user": {
+        /* updated user fields */
+      }
+    }
+    ```
 
-- `API_PORT` — Port for the API server (default `3001`).
-- `COUNTER_INITIAL` — Initial counter value (default `0`).
-- `COUNTER_STEP` — Increment step per call (default `1`, must be non-zero).
+## Authentication
 
-You can place these in an env file for your API app (e.g., `.env.local`) or export them in your shell before starting the server.
-
-## Quick Examples
-
-- Health:
-
-  ```bash
-  curl http://localhost:3001/health
-  ```
-
-- Get and increment count:
-
-  ```bash
-  curl http://localhost:3001/api/test/count
-  ```
-
-- Read current settings:
-
-  ```bash
-  curl http://localhost:3001/api/test/settings
-  ```
-
-- Update settings:
-  ```bash
-  curl -X POST http://localhost:3001/api/test/settings \
-       -H "Content-Type: application/json" \
-       -d '{"value": 42, "step": 3}'
-  ```
+Protected endpoints use Clerk. Send a bearer token:
