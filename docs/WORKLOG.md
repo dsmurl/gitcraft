@@ -71,6 +71,18 @@
 - updated the api readme with a simple endpoint map
 - aligned the env vars to be more namespaced per package
 
+### 2025-09-24
+
+- build the basic infra app for launching the website into s3 via pulumi
+- build the basic foundation app for handling the route53 and the cert long term
+- got into my pulumi account and added created a PULUMI_ACCESS_TOKEN to github secrets
+- tried a github workflow to build and deploy the web app to s3 and it broke
+  - I need to connect my pulumi account to my aws account via from
+  - need to figure out github secrects
+  - need to figure out aws secrets
+- added github repo environment called dev to add secrects and var for web
+  - added web env var to github so that it can build the web artifact
+
 ### Next
 
 - look into pulumi options or docker options
