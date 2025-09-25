@@ -1,0 +1,25 @@
+{
+  "name": "infra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Entry-level AWS deployment (S3 + CloudFront + ECR + optional SSM) managed by Pulumi",
+  "packageManager": "pnpm@9.14.2",
+  "scripts": {
+    "dev:preview": "pulumi preview -s dev",
+    "dev:up": "pulumi up -y -s dev",
+    "dev:destroy": "pulumi destroy -y -s dev",
+    "staging:preview": "pulumi preview -s staging",
+    "staging:up": "pulumi up -y -s staging",
+    "staging:destroy": "pulumi destroy -y -s staging",
+    "prod:preview": "pulumi preview -s prod",
+    "prod:up": "pulumi up -y -s prod",
+    "prod:destroy": "pulumi destroy -y -s prod"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^6.57.0",
+    "@pulumi/pulumi": "^3.134.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

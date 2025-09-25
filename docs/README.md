@@ -41,6 +41,10 @@ Work Roadmap:
   - [x] get the turso public db up and running on prod
   - [x] set up the env vars to allow for single-source of db .env vars
   - [x] namespace the env per nx package
+- [ ] go through the plan for ideas/pulumi-aws-entry-level-turso-plan.md
+  - [ ] read through the plan
+  - [ ] start hacking through the top
+  - [ ] finish the plan and update it
 - [ ] pulumi launch
   - [ ] build pulumi stack
   - [ ] deploy pulumi stack

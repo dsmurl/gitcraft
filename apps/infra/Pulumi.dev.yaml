@@ -1,0 +1,25 @@
+config:
+  aws:region: us-west-2
+
+  # Domain and subdomains (optional in base; CF uses default cert by default)
+  infra:domain.zoneName: example.com
+  infra:domain.webSubdomain: app
+  infra:domain.apiSubdomain: api
+
+  # Web cache TTLs
+  infra:web.cacheTtls.staticSeconds: 604800
+  infra:web.cacheTtls.htmlSeconds: 60
+
+  # Feature flags
+  infra:web.create: "true"
+  infra:api.createEcr: "true"
+  infra:secrets.create: "false"
+
+  # Optional SSM parameter names for secrets (values are provided via pulumi config set --secret)
+  infra:ssm.tursoDatabaseUrlParamName: "/gitcraft/dev/TURSO_DATABASE_URL"
+  infra:ssm.tursoAuthTokenParamName: "/gitcraft/dev/TURSO_AUTH_TOKEN"
+
+  # Optional tagging
+  infra:tags:
+    environment: dev
+    managed-by: pulumi

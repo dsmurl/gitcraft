@@ -1,0 +1,10 @@
+config:
+  aws:region: us-west-2
+
+  foundation:domain.zoneName: example.com
+  foundation:domain.webSubdomain: app
+  foundation:domain.apiSubdomain: api
+
+  foundation:tags:
+    environment: staging
+    managed-by: pulumi

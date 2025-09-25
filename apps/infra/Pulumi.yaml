@@ -1,0 +1,3 @@
+name: infra
+runtime: nodejs
+description: Entry-level AWS deployment (S3 + CloudFront + ECR + optional SSM) managed by Pulumi

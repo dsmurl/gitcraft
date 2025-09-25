@@ -1,0 +1,48 @@
+{
+  "name": "infra",
+  "sourceRoot": "apps/infra/src",
+  "targets": {
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/infra",
+        "command": "pnpm run dev:preview"
+      }
+    },
+    "up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/infra",
+        "command": "pnpm run dev:up"
+      }
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/infra",
+        "command": "pnpm run dev:destroy"
+      }
+    },
+    "preview:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/infra",
+        "command": "pnpm run prod:preview"
+      }
+    },
+    "up:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/infra",
+        "command": "pnpm run prod:up"
+      }
+    },
+    "destroy:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/infra",
+        "command": "pnpm run prod:destroy"
+      }
+    }
+  }
+}

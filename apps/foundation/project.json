@@ -1,0 +1,63 @@
+{
+  "name": "foundation",
+  "sourceRoot": "apps/foundation/src",
+  "targets": {
+    "preview": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/foundation",
+        "command": "pnpm run dev:preview"
+      },
+      "configurations": {
+        "dev": {
+          "command": "pnpm run dev:preview"
+        },
+        "staging": {
+          "command": "pnpm run staging:preview"
+        },
+        "prod": {
+          "command": "pnpm run prod:preview"
+        }
+      },
+      "defaultConfiguration": "dev"
+    },
+    "up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/foundation",
+        "command": "pnpm run dev:up"
+      },
+      "configurations": {
+        "dev": {
+          "command": "pnpm run dev:up"
+        },
+        "staging": {
+          "command": "pnpm run staging:up"
+        },
+        "prod": {
+          "command": "pnpm run prod:up"
+        }
+      },
+      "defaultConfiguration": "dev"
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/foundation",
+        "command": "pnpm run dev:destroy"
+      },
+      "configurations": {
+        "dev": {
+          "command": "pnpm run dev:destroy"
+        },
+        "staging": {
+          "command": "pnpm run staging:destroy"
+        },
+        "prod": {
+          "command": "pnpm run prod:destroy"
+        }
+      },
+      "defaultConfiguration": "dev"
+    }
+  }
+}
