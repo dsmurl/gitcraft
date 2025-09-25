@@ -2,6 +2,16 @@ name: Web Build (Artifact Only)
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment for env-scoped secrets/variables
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
 
 permissions:
   contents: read
@@ -9,6 +19,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     env:
       VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
       VITE_API_URL: ${{ vars.VITE_API_URL }}
