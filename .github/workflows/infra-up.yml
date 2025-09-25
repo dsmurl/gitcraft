@@ -15,7 +15,7 @@ on:
       aws-region:
         description: AWS region credentials default (should match stack config)
         required: true
-        default: us-east-2
+        default: us-west-2
         type: string
 
 permissions:
