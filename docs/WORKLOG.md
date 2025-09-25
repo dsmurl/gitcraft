@@ -10,7 +10,7 @@
 
 - Added cleanup scripts
 - Added the package build scripts for the api and the web
-- New web site with clerk and new api with some test routes. new docs section. nx adjusted apps
+- New website with clerk and new api with some test routes. new docs section. nx adjusted apps
   - Converted from the shoptrad monorepo setup with protected routes and Header
 - Added the basic api with some routes like health check and test routes
 - Updated the ReadMe and doc structure
@@ -30,7 +30,7 @@
   - will need some sort of new user signup page and signup end points
   - make the CRUD for Users and link them to a google account
   - make an account page for the user to see their info
-    - add edit form for the user to change their info
+    - add edit-user-form for the user to change their info
   - created svg icons and dir for the web app
 
 ### 2025-09-19
@@ -75,17 +75,20 @@
 
 - build the basic infra app for launching the website into s3 via pulumi
 - build the basic foundation app for handling the route53 and the cert long term
-- got into my pulumi account and added created a PULUMI_ACCESS_TOKEN to github secrets
-- tried a github workflow to build and deploy the web app to s3 and it broke
+- got into my pulumi account and added created a PULUMI_ACCESS_TOKEN to GitHub secrets
+- tried a GitHub workflow to build and deploy the web app to s3 and it broke
   - I need to connect my pulumi account to my aws account via from
-  - need to figure out github secrects
+  - need to figure out GitHub secrets
   - need to figure out aws secrets
-- added github repo environment called dev to add secrects and var for web
-  - added web env var to github so that it can build the web artifact
+- added dev GitHub repo environment to add secrets and var for web per environment
+  - added web env var to GitHub so that it can build the web artifact
+- MILESTONE !!! aligned the web-build GitHub workflow to successfully build and store FE artifact
+  - first successful GitHub action ever
 
 ### Next
 
-- look into pulumi options or docker options
+- find the next steps to get the web artifact into s3
+  - and the way to see it in the browser
 
 ### Todo
 
