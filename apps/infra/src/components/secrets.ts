@@ -1,5 +1,5 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
+import * as pulumi from '@pulumi/pulumi';
+import * as aws from '@pulumi/aws';
 
 export function createSsmSecretParameters(args: {
   parameters: { name: string; value: pulumi.Input<string> }[];
@@ -8,7 +8,7 @@ export function createSsmSecretParameters(args: {
   const created = args.parameters.map((p, i) => {
     return new aws.ssm.Parameter(`secret-${i}`, {
       name: p.name,
-      type: "SecureString",
+      type: 'SecureString',
       value: p.value,
       tags: args.tags,
     });

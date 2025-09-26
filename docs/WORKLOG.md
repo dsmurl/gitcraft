@@ -85,8 +85,15 @@
 - MILESTONE !!! aligned the web-build GitHub workflow to successfully build and store FE artifact
   - first successful GitHub action ever
 
+### 2025-09-25
+
+- made a plan for putting the web artifact into 3s and serving it.
+- made a doc for web-setup-for-deploy.md
+- added deploy job to the web-build github workflow
+
 ### Next
 
+- ask question: "are these currently created by pulumi in this setup? "
 - find the next steps to get the web artifact into s3
   - and the way to see it in the browser
 

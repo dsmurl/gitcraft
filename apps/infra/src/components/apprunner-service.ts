@@ -1,6 +1,9 @@
-import * as aws from "@pulumi/aws";
+import * as aws from '@pulumi/aws';
 
-export function createApiRepository(args: { name: string; tags?: Record<string, string> }) {
+export function createApiRepository(args: {
+  name: string;
+  tags?: Record<string, string>;
+}) {
   const repository = new aws.ecr.Repository(`${args.name}-repo`, {
     imageScanningConfiguration: { scanOnPush: true },
     forceDelete: true,
@@ -14,15 +17,15 @@ export function createApiRepository(args: { name: string; tags?: Record<string, 
       rules: [
         {
           rulePriority: 1,
-          description: "Keep last 10 images",
+          description: 'Keep last 10 images',
           selection: {
-            tagStatus: "any",
-            countType: "imageCountMoreThan",
-            countNumber: 10
+            tagStatus: 'any',
+            countType: 'imageCountMoreThan',
+            countNumber: 10,
           },
-          action: { type: "expire" }
-        }
-      ]
+          action: { type: 'expire' },
+        },
+      ],
     }),
   });
 

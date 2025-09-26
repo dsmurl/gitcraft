@@ -1,5 +1,5 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
+import * as pulumi from '@pulumi/pulumi';
+import * as aws from '@pulumi/aws';
 
 export interface WebStaticSiteArgs {
   name: string;
@@ -32,13 +32,13 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
       .all([bucket.arn, oai.iamArn])
       .apply(([bucketArn, oaiIamArn]) =>
         JSON.stringify({
-          Version: "2012-10-17",
+          Version: '2012-10-17',
           Statement: [
             {
-              Sid: "AllowCloudFrontRead",
-              Effect: "Allow",
+              Sid: 'AllowCloudFrontRead',
+              Effect: 'Allow',
               Principal: { AWS: oaiIamArn },
-              Action: ["s3:GetObject"],
+              Action: ['s3:GetObject'],
               Resource: [`${bucketArn}/*`],
             },
           ],
@@ -61,15 +61,15 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
         },
       },
     ],
-    defaultRootObject: "index.html",
+    defaultRootObject: 'index.html',
     defaultCacheBehavior: {
       targetOriginId: originId,
-      viewerProtocolPolicy: "redirect-to-https",
-      allowedMethods: ["GET", "HEAD", "OPTIONS"],
-      cachedMethods: ["GET", "HEAD", "OPTIONS"],
+      viewerProtocolPolicy: 'redirect-to-https',
+      allowedMethods: ['GET', 'HEAD', 'OPTIONS'],
+      cachedMethods: ['GET', 'HEAD', 'OPTIONS'],
       forwardedValues: {
         queryString: false,
-        cookies: { forward: "none" },
+        cookies: { forward: 'none' },
       },
       // opinionated: cache HTML briefly, assets can be overridden with custom behaviors later
       minTtl: 0,
@@ -80,19 +80,19 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
       {
         errorCode: 403,
         responseCode: 200,
-        responsePagePath: "/index.html",
-        errorCachingMinTtl: 0
+        responsePagePath: '/index.html',
+        errorCachingMinTtl: 0,
       },
       {
         errorCode: 404,
         responseCode: 200,
-        responsePagePath: "/index.html",
-        errorCachingMinTtl: 0
-      }
+        responsePagePath: '/index.html',
+        errorCachingMinTtl: 0,
+      },
     ],
-    priceClass: "PriceClass_100",
+    priceClass: 'PriceClass_100',
     restrictions: {
-      geoRestriction: { restrictionType: "none" },
+      geoRestriction: { restrictionType: 'none' },
     },
     tags: args.tags,
   });

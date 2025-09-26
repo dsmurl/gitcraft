@@ -11,13 +11,13 @@ config:
   infra:web.cacheTtls.htmlSeconds: 60
 
   # Feature flags
-  infra:web.create: "true"
-  infra:api.createEcr: "true"
-  infra:secrets.create: "false"
+  infra:web.create: 'true'
+  infra:api.createEcr: 'true'
+  infra:secrets.create: 'false'
 
   # Optional SSM parameter names for secrets (values are provided via pulumi config set --secret)
-  infra:ssm.tursoDatabaseUrlParamName: "/gitcraft/staging/TURSO_DATABASE_URL"
-  infra:ssm.tursoAuthTokenParamName: "/gitcraft/staging/TURSO_AUTH_TOKEN"
+  infra:ssm.tursoDatabaseUrlParamName: '/gitcraft/staging/TURSO_DATABASE_URL'
+  infra:ssm.tursoAuthTokenParamName: '/gitcraft/staging/TURSO_AUTH_TOKEN'
 
   # Optional tagging
   infra:tags:
