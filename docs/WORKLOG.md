@@ -91,11 +91,18 @@
 - made a doc for web-setup-for-deploy.md
 - added deploy job to the web-build github workflow
 
+### 2025-09-26
+
+- minor research of launching of web into s3 bucket
+
+### 2025-09-27
+
+- created step doc for ideas/pulumi-web-next-steps.md
+- created the s3 bucket for dsmurl-gitcraft-web-infra-dev
+
 ### Next
 
-- ask question: "are these currently created by pulumi in this setup? "
-- find the next steps to get the web artifact into s3
-  - and the way to see it in the browser
+- 8]
 
 ### Todo
 
