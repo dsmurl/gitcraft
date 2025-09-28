@@ -100,16 +100,20 @@
 - created step doc for ideas/pulumi-web-next-steps.md
 - created the s3 bucket for dsmurl-gitcraft-web-infra-dev
 - revised the plan to launch the web through s3
-- aws manual create Identity provider, policy, and role for dev deploy from web-setup-for-deploy.md
-- copied AWS_ROLE_TO_ASSUME to github dev environment secrets
+- aws manually created Identity provider, policy, and role for dev deploy from web-setup-for-deploy.md
+- copied AWS_ROLE_TO_ASSUME to GitHub dev environment secrets
+- added a lot of deploy infra to the web-build and the infra-up workflows
+- got all the secrets and variables in place to try the first infra-up in Actions
 
 ### Next
 
-- 8]
+- Need to figure out why the infra-up failed like "Run aws-actions/configure-aws-credentials@v4
+  Error: Credentials could not be loaded, please check your action inputs: Could not load credentials from any providers"
+  - This error means the OIDC → AssumeRole step didn’t produce AWS creds.
 
 ### Todo
 
-- after first web pulumi up, replace BUCKET_NAME, ACCOUNT_ID, and DISTRIBUTION_ID as appropriate. If you don’t know them yet, use one of the options under “When ARNs are unknown” below.
+- after the first web pulumi up, replace BUCKET_NAME, ACCOUNT_ID, and DISTRIBUTION_ID as appropriate. If you don’t know them yet, use one of the options under “When ARNs are unknown” below.
 
 ### Bugs
 

@@ -24,10 +24,13 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
   });
 
   // Enforce bucket-owner-only (disables ACLs)
-  const ownership = new aws.s3.BucketOwnershipControls(`${args.name}-ownership`, {
-    bucket: bucket.id,
-    rule: { objectOwnership: 'BucketOwnerEnforced' },
-  });
+  const ownership = new aws.s3.BucketOwnershipControls(
+    `${args.name}-ownership`,
+    {
+      bucket: bucket.id,
+      rule: { objectOwnership: 'BucketOwnerEnforced' },
+    }
+  );
 
   // Block all public access at the bucket level
   const pab = new aws.s3.BucketPublicAccessBlock(`${args.name}-pab`, {
@@ -39,16 +42,19 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
   });
 
   // Default server-side encryption (SSE-S3)
-  const sse = new aws.s3.BucketServerSideEncryptionConfigurationV2(`${args.name}-sse`, {
-    bucket: bucket.id,
-    rules: [
-      {
-        applyServerSideEncryptionByDefault: {
-          sseAlgorithm: 'AES256',
+  const sse = new aws.s3.BucketServerSideEncryptionConfigurationV2(
+    `${args.name}-sse`,
+    {
+      bucket: bucket.id,
+      rules: [
+        {
+          applyServerSideEncryptionByDefault: {
+            sseAlgorithm: 'AES256',
+          },
         },
-      },
-    ],
-  });
+      ],
+    }
+  );
 
   // Optional versioning (per-stack config)
   const versioning = new aws.s3.BucketVersioningV2(`${args.name}-versioning`, {
