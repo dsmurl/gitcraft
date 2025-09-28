@@ -62,7 +62,7 @@ jobs:
         run: aws sts get-caller-identity
 
       - name: Setup Pulumi CLI
-        uses: pulumi/setup-pulumi@v3
+        uses: pulumi/setup-pulumi@v2
 
       - name: Bootstrap Pulumi stack and config (if missing)
         working-directory: apps/infra
