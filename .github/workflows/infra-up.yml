@@ -22,6 +22,10 @@ permissions:
   id-token: write
   contents: read
 
+concurrency:
+  group: infra-${{ inputs.stack }}
+  cancel-in-progress: true
+
 env:
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
@@ -51,7 +55,7 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::123456789012:role/GitHubOIDCDeployRole
+          role-to-assume: ${{ secrets.AWS_INFRA_ROLE_TO_ASSUME }}
           role-session-name: gh-actions-infra-up
           aws-region: ${{ inputs.aws-region }}
 

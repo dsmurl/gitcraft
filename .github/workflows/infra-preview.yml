@@ -22,11 +22,16 @@ permissions:
   id-token: write
   contents: read
 
+concurrency:
+  group: infra-${{ inputs.stack }}
+  cancel-in-progress: true
+
 env:
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
 jobs:
   preview:
+    environment: ${{ inputs.stack }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,9 +54,29 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::123456789012:role/GitHubOIDCDeployRole
+          role-to-assume: ${{ secrets.AWS_INFRA_ROLE_TO_ASSUME }}
           role-session-name: gh-actions-infra-preview
           aws-region: ${{ inputs.aws-region }}
+
+      - name: Who am I?
+        run: aws sts get-caller-identity
+
+      - name: Setup Pulumi CLI
+        uses: pulumi/setup-pulumi@v3
+
+      - name: Bootstrap Pulumi stack and config (if missing)
+        working-directory: apps/infra
+        run: |
+          set -euo pipefail
+          pulumi stack select ${{ inputs.stack }} || pulumi stack init ${{ inputs.stack }}
+          pulumi config get aws:region >/dev/null 2>&1 || pulumi config set aws:region ${{ inputs.aws-region }}
+          pulumi config get infra:web.cacheTtls.staticSeconds >/dev/null 2>&1 || pulumi config set infra:web.cacheTtls.staticSeconds 604800
+          pulumi config get infra:web.cacheTtls.htmlSeconds >/dev/null 2>&1 || pulumi config set infra:web.cacheTtls.htmlSeconds 60
+          pulumi config get infra:web.enableVersioning >/dev/null 2>&1 || pulumi config set infra:web.enableVersioning false
+          pulumi config get infra:tags.project >/dev/null 2>&1 || pulumi config set --path infra:tags.project gitcraft
+          pulumi config get infra:tags.component >/dev/null 2>&1 || pulumi config set --path infra:tags.component web
+          pulumi config get infra:tags.environment >/dev/null 2>&1 || pulumi config set --path infra:tags.environment ${{ inputs.stack }}
+          pulumi config get infra:tags.managed-by >/dev/null 2>&1 || pulumi config set --path infra:tags.managed-by pulumi
 
       - name: Pulumi Preview
         uses: pulumi/actions@v5

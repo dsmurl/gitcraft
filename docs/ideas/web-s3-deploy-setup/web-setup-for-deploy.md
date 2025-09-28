@@ -163,11 +163,50 @@ Note: A2 and A3 are one-time manual bootstrap steps. Pulumi will create and mana
 B) Provision infra with Pulumi (per environment)
 
 - [ ] B1. Configure Pulumi stack (aws:region, tags, cache TTLs)
+  The goal is to set per-environment config that your Pulumi program reads.
+  Run these from the apps/infra folder after selecting/creating the stack (e.g., dev):
+
+  1) Select or create the stack
+     - pulumi stack select dev
+       (or) pulumi stack init dev
+
+  2) Set the AWS region for this stack
+     - pulumi config set aws:region us-west-2
+       Use your preferred region.
+
+  3) Set cache TTLs for the site
+     - pulumi config set infra:web.cacheTtls.staticSeconds 604800
+     - pulumi config set infra:web.cacheTtls.htmlSeconds 60
+       staticSeconds: for assets (long cache); htmlSeconds: for HTML (short cache).
+       These pair with your deploy headers so index.html stays fresh and assets are immutable.
+
+  4) Set feature flags (optional)
+     - pulumi config set infra:web.create true
+     - pulumi config set infra:api.createEcr false
+     - pulumi config set infra:secrets.create false
+       Adjust to your needs per environment.
+
+  5) Tags (helpful for cost/ops). Use --path to build a map:
+     - pulumi config set --path 'infra:tags.project' gitcraft
+     - pulumi config set --path 'infra:tags.component' web
+     - pulumi config set --path 'infra:tags.environment' dev
+     - pulumi config set --path 'infra:tags.managed-by' pulumi
+     - pulumi config set --path 'infra:tags.owner' your-name
+
+  6) Optional: control S3 versioning from config
+     - pulumi config set infra:web.enableVersioning false
+       Set to true if you want versioning. You can change this later per env.
+
+  Notes:
+  - These commands write to Pulumi.<stack>.yaml. You can also edit the YAML directly.
+  - Your current config keys (infra:web.cacheTtls.* and infra:tags) are fine; this just standardizes how to set them.
+
 - [ ] B2. Create resources with Pulumi:
   - S3 bucket
-    - Private; Block all public access; ACLs disabled
+    - Private; Block all public access (Public Access Block)
+    - ACLs disabled (Bucket owner enforced)
     - Default encryption: SSE-S3
-    - Versioning: optional (recommended but can be off for learning)
+    - Versioning: optional (config-driven)
     - Tags: Project, Component=web, Environment, ManagedBy=pulumi, Owner
   - CloudFront distribution
     - Origin: S3 with OAI
@@ -176,11 +215,21 @@ B) Provision infra with Pulumi (per environment)
     - Compress enabled; PriceClass_100
     - SPA support: custom error responses (403/404 -> /index.html, response 200)
     - TLS: default CloudFront certificate (\*.cloudfront.net)
+
 - [ ] B3. Export outputs from Pulumi
   - bucketName
   - bucketRegion
   - cloudFrontDistributionId
   - cloudFrontDomainName
+
+Do my Pulumi files need changes?
+- Your component is close. Suggested improvements applied:
+  - S3: enforce Public Access Block (block/ignore public ACLs and policies).
+  - S3: default encryption (SSE-S3).
+  - S3: optional versioning controlled by config infra:web.enableVersioning.
+  - S3: bucket ownership controls set to BucketOwnerEnforced (disables ACLs).
+  - CloudFront: enable compression.
+  These align the stack to the plan; behavior remains the same otherwise.
 
 C) Wire GitHub environment (per environment)
 

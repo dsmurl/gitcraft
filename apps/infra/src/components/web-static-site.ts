@@ -13,11 +13,49 @@ export interface WebStaticSiteArgs {
 }
 
 export function createWebStaticSite(args: WebStaticSiteArgs) {
+  const cfg = new pulumi.Config('infra');
+  const enableVersioning = cfg.getBoolean('web.enableVersioning') ?? false;
+
   const bucket = new aws.s3.Bucket(`${args.name}-bucket`, {
     bucketPrefix: `${args.name}-`,
-    // Private bucket; CloudFront Origin Access Identity gets read access
+    // Keep deletions easy in dev/staging; consider toggling in prod
     forceDestroy: true,
     tags: args.tags,
+  });
+
+  // Enforce bucket-owner-only (disables ACLs)
+  const ownership = new aws.s3.BucketOwnershipControls(`${args.name}-ownership`, {
+    bucket: bucket.id,
+    rule: { objectOwnership: 'BucketOwnerEnforced' },
+  });
+
+  // Block all public access at the bucket level
+  const pab = new aws.s3.BucketPublicAccessBlock(`${args.name}-pab`, {
+    bucket: bucket.id,
+    blockPublicAcls: true,
+    blockPublicPolicy: true,
+    ignorePublicAcls: true,
+    restrictPublicBuckets: true,
+  });
+
+  // Default server-side encryption (SSE-S3)
+  const sse = new aws.s3.BucketServerSideEncryptionConfigurationV2(`${args.name}-sse`, {
+    bucket: bucket.id,
+    rules: [
+      {
+        applyServerSideEncryptionByDefault: {
+          sseAlgorithm: 'AES256',
+        },
+      },
+    ],
+  });
+
+  // Optional versioning (per-stack config)
+  const versioning = new aws.s3.BucketVersioningV2(`${args.name}-versioning`, {
+    bucket: bucket.id,
+    versioningConfiguration: {
+      status: enableVersioning ? 'Enabled' : 'Disabled',
+    },
   });
 
   // Origin Access Identity for CloudFront -> S3 private access
@@ -71,7 +109,9 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
         queryString: false,
         cookies: { forward: 'none' },
       },
-      // opinionated: cache HTML briefly, assets can be overridden with custom behaviors later
+      // Enable gzip/brotli compression at CloudFront
+      compress: true,
+      // opinionated: cache HTML briefly; assets can be overridden via headers
       minTtl: 0,
       defaultTtl: args.cacheTtls.htmlSeconds,
       maxTtl: 31536000,
@@ -99,6 +139,10 @@ export function createWebStaticSite(args: WebStaticSiteArgs) {
 
   return {
     bucket,
+    ownership,
+    pab,
+    sse,
+    versioning,
     oai,
     policy,
     distribution,
