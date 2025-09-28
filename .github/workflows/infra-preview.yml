@@ -78,6 +78,13 @@ jobs:
           pulumi config get infra:tags.environment >/dev/null 2>&1 || pulumi config set --path infra:tags.environment ${{ inputs.stack }}
           pulumi config get infra:tags.managed-by >/dev/null 2>&1 || pulumi config set --path infra:tags.managed-by pulumi
 
+      - name: Install Pulumi program dependencies
+        working-directory: apps/infra
+        run: |
+          set -euo pipefail
+          pnpm install
+          pulumi install
+
       - name: Pulumi Preview
         uses: pulumi/actions@v5
         with:
