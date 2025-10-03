@@ -105,15 +105,30 @@
 - added a lot of deploy infra to the web-build and the infra-up workflows
 - got all the secrets and variables in place to try the first infra-up in Actions
 
+### 2025-09-28
+
+- conformed aws infra build roll to AWS_ROLE_TO_ASSUME
+- patching the infra-preview job with a step for pnpm install and pulumi install
+- trying to get the infra-up to work, but it's fully standing up yet
+
+### 2025-10-03
+
+- updated the node to 22.20 and pnpm to 10.18.0
+- updated the better-sqlite3 to 12.4.1 from 7 and removed the unneeded types there
+- found that api:dev was trying to point towards drizzle/dist/main.js
+  - fixed by adding paths to the tsconfig.json to point dev towards libs/drizzle src code
+
 ### Next
 
 - Need to figure out why the infra-up failed like "Run aws-actions/configure-aws-credentials@v4
-  Error: Credentials could not be loaded, please check your action inputs: Could not load credentials from any providers"
+  Error: Credentials could not be loaded, please check your action inputs: Could not load credentials from any
+  providers"
   - This error means the OIDC → AssumeRole step didn’t produce AWS creds.
 
 ### Todo
 
-- after the first web pulumi up, replace BUCKET_NAME, ACCOUNT_ID, and DISTRIBUTION_ID as appropriate. If you don’t know them yet, use one of the options under “When ARNs are unknown” below.
+- after the first web pulumi up, replace BUCKET_NAME, ACCOUNT_ID, and DISTRIBUTION_ID as appropriate. If you don’t know
+  them yet, use one of the options under “When ARNs are unknown” below.
 
 ### Bugs
 
