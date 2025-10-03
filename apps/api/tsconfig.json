@@ -9,7 +9,9 @@
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@gitcraft/db": ["../../../libs/drizzle/src/index.ts"],
+      "@gitcraft/db/*": ["../../../libs/drizzle/src/*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
